@@ -403,9 +403,9 @@ def map_coordinates(mapping, q_chr, q_start, q_end, q_strand='+', print_match=Fa
 
 
 def crossmap_vcf_file(mapping, infile, outfile, liftoverfile, refgenome):
-    '''
+    """
     Convert genome coordinate in VCF format.
-    '''
+    """
 
     # index refegenome file if it hasn't been done
     if not os.path.exists(refgenome + '.fai'):
@@ -419,7 +419,6 @@ def crossmap_vcf_file(mapping, infile, outfile, liftoverfile, refgenome):
 
     total = 0
     fail = 0
-    withChr = False
 
     for line in ireader.reader(infile):
         if not line.strip():
@@ -477,10 +476,10 @@ def crossmap_vcf_file(mapping, infile, outfile, liftoverfile, refgenome):
 
 
 def crossmap_bed_file(mapping, inbed, outfile=None):
-    '''
+    """
     Convert genome coordinates (in bed format) between assemblies.
     BED format: http://genome.ucsc.edu/FAQ/FAQformat.html#format1
-    '''
+    """
 
     # check if 'outfile' was set. If not set, print to screen, if set, print
     # to file
@@ -667,38 +666,38 @@ def crossmap_bed_file(mapping, inbed, outfile=None):
 
 
 def crossmap_gff_file(mapping, ingff, outfile=None):
-    '''
+    """
     Convert genome coordinates (in GFF/GTF format) between assemblies.
     GFF (General Feature Format) lines have nine required fields that must be Tab-separated:
 
-1. seqname - The name of the sequence. Must be a chromosome or scaffold.
-2. source - The program that generated this feature.
-3. feature - The name of this type of feature. Some examples of standard feature types
-   are "CDS", "start_codon", "stop_codon", and "exon".
-4. start - The starting position of the feature in the sequence. The first base is numbered 1.
-5. end - The ending position of the feature (inclusive).
-6. score - A score between 0 and 1000. If the track line useScore attribute is set to 1
-   for this annotation data set, the score value will determine the level of gray in
-   which this feature is displayed (higher numbers = darker gray). If there is no score
-   value, enter ".".
-7. strand - Valid entries include '+', '-', or '.' (for don't know/don't care).
-8. frame - If the feature is a coding exon, frame should be a number between 0-2 that
-   represents the reading frame of the first base. If the feature is not a coding exon,
-   the value should be '.'.
-9. group - All lines with the same group are linked together into a single item.
+    1. seqname - The name of the sequence. Must be a chromosome or scaffold.
+    2. source - The program that generated this feature.
+    3. feature - The name of this type of feature. Some examples of standard feature types
+       are "CDS", "start_codon", "stop_codon", and "exon".
+    4. start - The starting position of the feature in the sequence. The first base is numbered 1.
+    5. end - The ending position of the feature (inclusive).
+    6. score - A score between 0 and 1000. If the track line useScore attribute is set to 1
+       for this annotation data set, the score value will determine the level of gray in
+       which this feature is displayed (higher numbers = darker gray). If there is no score
+       value, enter ".".
+    7. strand - Valid entries include '+', '-', or '.' (for don't know/don't care).
+    8. frame - If the feature is a coding exon, frame should be a number between 0-2 that
+       represents the reading frame of the first base. If the feature is not a coding exon,
+       the value should be '.'.
+    9. group - All lines with the same group are linked together into a single item.
 
-GFF format: http://genome.ucsc.edu/FAQ/FAQformat.html#format3
+    GFF format: http://genome.ucsc.edu/FAQ/FAQformat.html#format3
 
-GTF (Gene Transfer Format) is a refinement to GFF that tightens the specification. The
-first eight GTF fields are the same as GFF. The group field has been expanded into a
-list of attributes. Each attribute consists of a type/value pair. Attributes must end
-in a semi-colon, and be separated from any following attribute by exactly one space.
+    GTF (Gene Transfer Format) is a refinement to GFF that tightens the specification. The
+    first eight GTF fields are the same as GFF. The group field has been expanded into a
+    list of attributes. Each attribute consists of a type/value pair. Attributes must end
+    in a semi-colon, and be separated from any following attribute by exactly one space.
 
-GTF format: http://genome.ucsc.edu/FAQ/FAQformat.html#format4
+    GTF format: http://genome.ucsc.edu/FAQ/FAQformat.html#format4
 
-We do NOT check if features (exon, CDS, etc) belonging to the same gene originally were
-converted into the same chromosome/strand.
-'''
+    We do NOT check if features (exon, CDS, etc) belonging to the same gene originally were
+    converted into the same chromosome/strand.
+    """
 
     if outfile is not None:
         FILE_OUT = open(outfile, 'w')
@@ -720,8 +719,8 @@ converted into the same chromosome/strand.
         fields = line.split('\t')
         # check GFF file
         # if len(fields) != 9:
-        #	print >>sys.stderr, 'GFF file must has 9 columns. Skip ' + line
-        #	continue
+        # print >>sys.stderr, 'GFF file must has 9 columns. Skip ' + line
+        # continue
         try:
             start = int(fields[3]) - 1  # 0-based
             end = int(fields[4]) / 1
@@ -771,7 +770,7 @@ converted into the same chromosome/strand.
 
 def crossmap_bam_file(mapping, chainfile, infile, outfile_prefix, chrom_size, IS_size=200, IS_std=30, fold=3,
                       addtag=True):
-    '''
+    """
     Convert genome coordinates (in BAM/SAM format) between assemblies.
     BAM/SAM format: http://samtools.sourceforge.net/
     chrom_size is target chromosome size
@@ -805,7 +804,7 @@ def crossmap_bam_file(mapping, chainfile, infile, outfile_prefix, chrom_size, IS
                     SM: multiple mapped
                     SU: uniquely mapped
 
-    '''
+    """
 
     # determine the input file format (BAM or SAM)
     try:
@@ -943,9 +942,9 @@ def crossmap_bam_file(mapping, chainfile, infile, outfile_prefix, chrom_size, IS
                         except:
                             read2_maps = None
 
-                        # ------------------------------------
-                        # both R1 and R2  unmapped
-                        # ------------------------------------
+                            # ------------------------------------
+                            # both R1 and R2  unmapped
+                            # ------------------------------------
                     if read2_maps is None:
                         NN += 1
                         if addtag:
@@ -1015,9 +1014,9 @@ def crossmap_bam_file(mapping, chainfile, infile, outfile_prefix, chrom_size, IS
                         OUT_FILE.write(new_alignment)
                         continue
 
-                    # ==================================
-                    # R1 is originally mapped
-                    # ==================================
+                        # ==================================
+                        # R1 is originally mapped
+                        # ==================================
                 else:
                     try:
                         read1_chr = samfile.getrname(old_alignment.tid)
@@ -1041,9 +1040,9 @@ def crossmap_bam_file(mapping, chainfile, infile, outfile_prefix, chrom_size, IS
                         except:
                             read2_maps = None
 
-                        # ------------------------------------
-                        # R1 unmapped (failed to liftover)
-                        # ------------------------------------
+                            # ------------------------------------
+                            # R1 unmapped (failed to liftover)
+                            # ------------------------------------
                 if read1_maps is None:
                     # 2 update flag (0x4: segment unmapped)
                     new_alignment.flag = new_alignment.flag | 0x4
@@ -1139,9 +1138,9 @@ def crossmap_bam_file(mapping, chainfile, infile, outfile_prefix, chrom_size, IS
                         OUT_FILE.write(new_alignment)
                         continue
 
-                    # ------------------------------------
-                    # R1 uniquely mapped
-                    # ------------------------------------
+                        # ------------------------------------
+                        # R1 uniquely mapped
+                        # ------------------------------------
                 elif len(read1_maps) == 2:
 
                     if read1_maps[1][3] == '-':
@@ -1232,9 +1231,9 @@ def crossmap_bam_file(mapping, chainfile, infile, outfile_prefix, chrom_size, IS
                         OUT_FILE.write(new_alignment)
                         continue
 
-                    # ------------------------------------
-                    # R1 multiple mapped
-                    # -----------------------------------
+                        # ------------------------------------
+                        # R1 multiple mapped
+                        # -----------------------------------
                 elif len(read1_maps) > 2 and len(read1_maps) % 2 == 0:
                     # 2
                     new_alignment.flag = new_alignment.flag | 0x100
@@ -1320,9 +1319,11 @@ def crossmap_bam_file(mapping, chainfile, infile, outfile_prefix, chrom_size, IS
                         OUT_FILE.write(new_alignment)
                         continue
                 else:
+                    pass
                     # old_alignment.tid = name_to_id[samfile.getrname(old_alignment.tid)]
-                    OUT_FILE_UNMAP.write(old_alignment)
-                    failed += 1
+                    # TODO OUT_FILE_UNMAP
+                    # OUT_FILE_UNMAP.write(old_alignment)
+                    # failed += 1
 
             # Singel end sequencing
             else:
@@ -1502,10 +1503,11 @@ def crossmap_bam_file(mapping, chainfile, infile, outfile_prefix, chrom_size, IS
 
 
 def crossmap_wig_file(mapping, in_file, out_prefix, source_chrom_size, taget_chrom_size, in_format, binSize=100000):
-    '''Convert genome coordinates (in wiggle/bigwig format) between assemblies.
+    """
+    Convert genome coordinates (in wiggle/bigwig format) between assemblies.
     wiggle format: http://genome.ucsc.edu/goldenPath/help/wiggle.html
     bigwig format: http://genome.ucsc.edu/goldenPath/help/bigWig.html
-    '''
+    """
 
     OUT_FILE1 = open(out_prefix + '.bgr', 'w')  # original bgr file
     OUT_FILE2 = open(out_prefix + '.sorted.bgr', 'w')  # sorted bgr file
