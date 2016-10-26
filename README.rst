@@ -780,7 +780,7 @@ NOTE:
 2. Reference genome is genome sequence of target assembly.
 3. If the reference genome sequence file (../database/genome/hg18.fa) was not indexed, CrossMap will automatically indexed it (only the first time you run CrossMap). 
 4. Output files: *output_file* and *output_file.unmap*. 
-5. In the output VCF file, whether the chromosome IDs contain "chr" or not depends on the format of the input VCF file. 
+5. In the output VCF file, whether the chromosome IDs contain "chr" or not depends on the Chain file (version >= 0.2.6). 
 
 
 Compare to UCSC liftover tool

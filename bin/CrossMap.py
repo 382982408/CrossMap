@@ -38,7 +38,7 @@ __contributor__="Liguo Wang, Hao Zhao"
 __copyright__ = "Copyright 2013, Mayo Clinic"
 __credits__ = []
 __license__ = "GPLv2"
-__version__="0.2.5"
+__version__="0.2.6"
 __maintainer__ = "Liguo Wang"
 __email__ = "wangliguo78@gmail.com"
 __status__ = "Production"
@@ -399,11 +399,7 @@ def crossmap_vcf_file(mapping, infile,outfile, liftoverfile, refgenome):
 			print >>UNMAP, line
 		else:
 			total += 1
-			if fields[0].startswith('chr'):
-				withChr = True
-				chrom = fields[0]
-			else:
-				chrom = 'chr' + fields[0]
+			chrom = fields[0]
 			start = int(fields[1])-1	# 0 based
 			end = start + len(fields[3])
 			a = map_coordinates(mapping, chrom, start, end,'+')
@@ -413,8 +409,7 @@ def crossmap_vcf_file(mapping, infile,outfile, liftoverfile, refgenome):
 				continue
 			if len(a) == 2:
 				# update chrom
-				if withChr is False:
-					fields[0] = str(a[1][0]).replace('chr','')
+				fields[0] = str(a[1][0])
 				# update start coordinate
 				fields[1] = a[1][1] + 1
 				
